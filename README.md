@@ -1,8 +1,10 @@
-# Google Ads Analyzer — Claude Code Skill
+# Google Ads Analyzer — Claude Cowork Skill
 
-**Version:** 0.8.2 · **Author:** Andrey Kisselev · andrey@addimarketing.com
+**Version:** 0.8.3 · **Author:** Andrey Kisselev · andrey@addimarketing.com
 
-A Claude Code skill that analyzes Google Ads and Merchant Center CSV exports. Drop in a report, get metrics, charts, and a written analysis — no setup, no prompting required.
+A Claude Cowork skill that analyzes Google Ads and Merchant Center CSV exports. Drop in a report, get metrics, charts, and a written analysis. No setup, no prompting required.
+
+Also works in Claude Code (same skills format).
 
 ---
 
@@ -33,34 +35,53 @@ A Claude Code skill that analyzes Google Ads and Merchant Center CSV exports. Dr
 
 ## Requirements
 
-- [Claude Code](https://claude.ai/code) (CLI)
-- Python 3.9+
+- A paid Claude plan (Pro, Max, or Team) with access to Claude Cowork. Or Claude Code, if you prefer the CLI.
+- Python 3.9+ available on the machine where Claude runs the skill
 - Python packages: `pip install pandas matplotlib`
 
 ---
 
 ## Installation
 
+### Claude Cowork (desktop app)
+
+1. Download this repo as a ZIP (use the green **Code → Download ZIP** button on GitHub, or download a tagged release).
+2. Make sure the ZIP has the `google-ads-analyzer` folder at its root, with `SKILL.md` directly inside it. If your download nests it one level deeper, re-zip so the structure looks like:
+
+   ```
+   google-ads-analyzer.zip
+     google-ads-analyzer/
+       SKILL.md
+       scripts/
+         analyze.py
+         seasonality.py
+   ```
+
+3. Open Claude Cowork, click **Customize** in the left sidebar, click the **+** button, choose the **Skills** tab, and upload the ZIP.
+4. Done. Claude Cowork picks up the skill automatically.
+
+### Claude Code (CLI)
+
 1. Copy the `google-ads-analyzer` folder into your Claude Code skills directory:
 
-```
-your-project/
-  .claude/
-    skills/
-      google-ads-analyzer/   ← paste here
-        SKILL.md
-        scripts/
-          analyze.py
-          seasonality.py
-```
+   ```
+   your-project/
+     .claude/
+       skills/
+         google-ads-analyzer/   ← paste here
+           SKILL.md
+           scripts/
+             analyze.py
+             seasonality.py
+   ```
 
-2. That's it. Claude Code picks up the skill automatically.
+2. Done. Claude Code picks up the skill automatically.
 
 ---
 
 ## Usage
 
-Once installed, just hand Claude a CSV or zip file:
+Once installed, hand Claude a CSV or zip file:
 
 > "Analyze this" + attach your Google Ads CSV
 
@@ -68,11 +89,16 @@ Claude runs the analysis immediately without asking follow-up questions.
 
 **Locale override** (if auto-detection is wrong):
 
-When chatting with Claude, you can mention: *"Use locale CH"* — or the script accepts `--locale CH` / `--locale US` / `--locale GB` directly.
+When chatting with Claude, you can mention: *"Use locale CH"*. The script also accepts `--locale CH` / `--locale US` / `--locale GB` directly.
 
 ---
 
 ## Changelog
+
+### 0.8.3 — 2026-05-09
+- Repositioned as a Claude Cowork skill (Claude Code still supported)
+- Added Cowork ZIP-upload installation flow
+- Path portability: SKILL.md uses `${CLAUDE_SKILL_DIR}` for script paths, so the skill resolves correctly regardless of install location
 
 ### 0.8.2 — 2026-05-09
 - Removed internal Google Sheet dependency from Change History flow

@@ -1,6 +1,6 @@
 ---
 name: google-ads-analyzer
-version: 0.8.2
+version: 0.8.3
 author: Andrey Kisselev <andrey@addimarketing.com>
 description: Analyzes Google Ads CSV exports — campaigns, ad groups, keywords, search terms, change history, AND Merchant Center product exports (.zip or .tsv). When a change history CSV is provided alongside a performance CSV, cross-references both to explain metric movements. Use when user provides a Google Ads report CSV, Merchant Center product download, or asks to analyze Google Ads / Merchant Center data.
 allowed-tools: Read, Write, Bash, Glob
@@ -20,7 +20,7 @@ Analyzes Google Ads CSV exports and Merchant Center product downloads. Produces 
 
 **Run:**
 ```bash
-python3 .claude/skills/google-ads-analyzer/scripts/analyze.py "<file_path>"
+python3 ${CLAUDE_SKILL_DIR}/scripts/analyze.py "<file_path>"
 ```
 
 **Output:** spend, impressions, clicks, conversions, conv value, CPC, cost/conv, ROAS, CTR, conv rate — by campaign and by item. Charts saved next to the CSV:
@@ -36,7 +36,7 @@ python3 .claude/skills/google-ads-analyzer/scripts/analyze.py "<file_path>"
 Auto-detected when the CSV has `Old value` / `New value` columns (standard Google Ads change history download).
 
 ```bash
-python3 .claude/skills/google-ads-analyzer/scripts/analyze.py "<file_path>"
+python3 ${CLAUDE_SKILL_DIR}/scripts/analyze.py "<file_path>"
 ```
 Output: change count, date range, breakdown by type and campaign, timeline, recent changes list. Charts: `changes_by_type.png`, `changes_by_campaign.png`, `changes_timeline.png`.
 
@@ -45,8 +45,8 @@ Output: change count, date range, breakdown by type and campaign, timeline, rece
 When the user provides **both** a performance CSV and a change history CSV, run `analyze.py` on each file separately, then present the outputs together:
 
 ```bash
-python3 .claude/skills/google-ads-analyzer/scripts/analyze.py "<performance_file>"
-python3 .claude/skills/google-ads-analyzer/scripts/analyze.py "<change_history_file>"
+python3 ${CLAUDE_SKILL_DIR}/scripts/analyze.py "<performance_file>"
+python3 ${CLAUDE_SKILL_DIR}/scripts/analyze.py "<change_history_file>"
 ```
 
 In your narrative, cross-reference the two: tie specific changes (from the change history output) to metric movements (from the performance output). The performance data shows WHAT the metrics are; the change history shows WHAT was changed during the period.
@@ -68,7 +68,7 @@ If no change history CSV is provided, skip this step entirely — do not prompt 
 
 **Run** (accepts `.zip` or `.tsv` directly — auto-detected):
 ```bash
-python3 .claude/skills/google-ads-analyzer/scripts/analyze.py "<file_path>"
+python3 ${CLAUDE_SKILL_DIR}/scripts/analyze.py "<file_path>"
 ```
 
 **Output:** Catalogue overview (total, in-stock, on sale, variants), click performance (paid vs unpaid/free listings), top 10 by all clicks, top 10 by unpaid clicks, feed quality (GTIN coverage flagged if <80%, missing images/descriptions), by product type, by Google product category, out-of-stock list. Charts: `mc_clicks_by_product.png`, `mc_by_product_type.png`, `mc_price_distribution.png`.
@@ -103,7 +103,7 @@ When the account currency maps to a supported locale (CHF → Switzerland, GBP �
 
 To override the auto-detected locale, pass `--locale CH` (or US, GB):
 ```bash
-python3 .claude/skills/google-ads-analyzer/scripts/analyze.py "<file>" --locale CH
+python3 ${CLAUDE_SKILL_DIR}/scripts/analyze.py "<file>" --locale CH
 ```
 
 ## Timing Alignment (Change History only)
@@ -121,6 +121,10 @@ A note flags if a significant share of changes landed in the final third of the 
 ---
 
 ## Changelog
+
+### 0.8.3 — 2026-05-09
+- Path portability: replaced hard-coded `.claude/skills/google-ads-analyzer/scripts/...` paths with `${CLAUDE_SKILL_DIR}/scripts/...` so the skill resolves correctly regardless of where it's installed (Claude Code project, Claude Code personal, or Claude Cowork desktop)
+- Repositioned as primarily a Claude Cowork skill (Claude Code still supported)
 
 ### 0.8.2 — 2026-05-09
 - Removed internal Google Sheet dependency from Change History flow
