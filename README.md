@@ -1,121 +1,32 @@
-# Google Ads Analyzer — Claude Cowork Skill
+# Google Ads Analyzer
 
-**Version:** 0.8.3 · **Author:** Andrey Kisselev · andrey@addimarketing.com
+A Claude skill that analyzes Google Ads and Merchant Center CSV exports. Drop in a report, get metrics, charts, and a written analysis. No setup, no prompting required.
 
-A Claude Cowork skill that analyzes Google Ads and Merchant Center CSV exports. Drop in a report, get metrics, charts, and a written analysis. No setup, no prompting required.
+Works in **Claude Cowork** (desktop app) and **Claude Code** (CLI) — same skill format.
 
-Also works in Claude Code (same skills format).
+## Download
 
----
+Get the latest release as a ZIP:
 
-## What it analyzes
+**→ [Latest release](https://github.com/akisselev/google-ads-analyzer/releases/latest)**
 
-| Report type | How to export |
-|---|---|
-| Campaign / ad group / keyword / search term | Google Ads UI → Reports → download CSV |
-| Change history | Google Ads → Change History → download CSV |
-| Period-over-period comparison | Google Ads UI → add comparison date range → download CSV |
-| Merchant Center products | Merchant Center → Products → Actions → Download (.zip or .tsv) |
+## Install
 
----
+### Claude Cowork
+1. Download `google-ads-analyzer-vX.Y.Z.zip` from the release page.
+2. In Claude Cowork: **Customize → + → Skills tab → upload the ZIP.**
 
-## What you get
+### Claude Code
+1. Unzip the archive.
+2. Move the `google-ads-analyzer/` folder into your project's `.claude/skills/` directory.
 
-**Performance reports** — spend, impressions, clicks, conversions, conv value, CPC, cost/conv, ROAS, CTR, conv rate — broken down by campaign and by item. Four charts saved next to your CSV: top items by spend, campaign performance (4-panel), status distribution, cost vs conversions.
-
-**Change history** — change count, date range, breakdown by type and campaign, timing alignment table (how much of the period remained after each change — High / Medium / Limited / Minimal impact window).
-
-**Comparison reports** — current vs previous period with ▲/▼ indicators per campaign for Spend, Conv, ROAS, CPA. One 4-panel chart comparing all campaigns side by side.
-
-**Merchant Center** — catalogue overview (total, in-stock, on sale, variants), paid vs unpaid click split, top 10 by clicks, feed quality flags (GTIN coverage, missing images/descriptions), by product type and Google category, out-of-stock list. Three charts.
-
-**Seasonality context** — for CH, US, and GB accounts, the script automatically surfaces holidays and gifting/shopping peaks within the report period (or within ±14 days).
-
----
+Full usage details, requirements, and changelog are inside the ZIP (`README.md` + `SKILL.md`).
 
 ## Requirements
 
-- A paid Claude plan (Pro, Max, or Team) with access to Claude Cowork. Or Claude Code, if you prefer the CLI.
-- Python 3.9+ available on the machine where Claude runs the skill
-- Python packages: `pip install pandas matplotlib`
+- Python 3.9+ on the machine where Claude runs the skill
+- `pip install pandas matplotlib`
 
----
-
-## Installation
-
-### Claude Cowork (desktop app)
-
-1. Download this repo as a ZIP (use the green **Code → Download ZIP** button on GitHub, or download a tagged release).
-2. Make sure the ZIP has the `google-ads-analyzer` folder at its root, with `SKILL.md` directly inside it. If your download nests it one level deeper, re-zip so the structure looks like:
-
-   ```
-   google-ads-analyzer.zip
-     google-ads-analyzer/
-       SKILL.md
-       scripts/
-         analyze.py
-         seasonality.py
-   ```
-
-3. Open Claude Cowork, click **Customize** in the left sidebar, click the **+** button, choose the **Skills** tab, and upload the ZIP.
-4. Done. Claude Cowork picks up the skill automatically.
-
-### Claude Code (CLI)
-
-1. Copy the `google-ads-analyzer` folder into your Claude Code skills directory:
-
-   ```
-   your-project/
-     .claude/
-       skills/
-         google-ads-analyzer/   ← paste here
-           SKILL.md
-           scripts/
-             analyze.py
-             seasonality.py
-   ```
-
-2. Done. Claude Code picks up the skill automatically.
-
----
-
-## Usage
-
-Once installed, hand Claude a CSV or zip file:
-
-> "Analyze this" + attach your Google Ads CSV
-
-Claude runs the analysis immediately without asking follow-up questions.
-
-**Locale override** (if auto-detection is wrong):
-
-When chatting with Claude, you can mention: *"Use locale CH"*. The script also accepts `--locale CH` / `--locale US` / `--locale GB` directly.
-
----
-
-## Changelog
-
-### 0.8.3 — 2026-05-09
-- Repositioned as a Claude Cowork skill (Claude Code still supported)
-- Added Cowork ZIP-upload installation flow
-- Path portability: SKILL.md uses `${CLAUDE_SKILL_DIR}` for script paths, so the skill resolves correctly regardless of install location
-
-### 0.8.2 — 2026-05-09
-- Removed internal Google Sheet dependency from Change History flow
-- Change history CSV is now optional: if provided alongside a performance CSV, both are analyzed and cross-referenced; if absent, the step is skipped silently
-
-### 0.8.1 — 2026-05-06
-- Comparison report: replaced wide cramped table with 2-line per-campaign block format with ▲/▼ change indicators
-- Comparison report: added `comparison_campaigns.png` — 4-panel chart (Spend, Conv, ROAS, CPA)
-
-### 0.8.0 — 2026-05-06
-- Added Merchant Center product export analysis (`.zip` / `.tsv`)
-- Added locale-aware seasonality context (CH/US/GB)
-- Added change timing alignment table (High / Medium / Limited / Minimal)
-- Added `--locale XX` CLI override; auto-detected from CSV currency
-
----
-
-## Questions or feedback
+## Questions
 
 andrey@addimarketing.com
