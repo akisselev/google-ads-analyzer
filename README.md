@@ -1,6 +1,6 @@
 # Google Ads Analyzer
 
-A Claude skill that analyzes Google Ads and Merchant Center CSV exports. Drop in a report, get metrics, charts, and a written analysis. No setup, no prompting required.
+A Claude skill that analyzes Google Ads CSV exports. Drop in a report, get metrics, charts, and a written analysis. No setup, no prompting required.
 
 Works in **Claude Cowork** (desktop app) and **Claude Code** (CLI) — same skill format.
 
